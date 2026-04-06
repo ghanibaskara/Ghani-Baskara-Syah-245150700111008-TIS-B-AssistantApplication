@@ -14,7 +14,13 @@ class AssistantApplicationController extends Controller
      */
     public function index()
     {
-        return response()->json(AssistantApplication::all());
+        $applications = AssistantApplication::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data retrieved successfully',
+            'data' => $applications
+        ], 200);
     }
 
     /**
@@ -23,19 +29,40 @@ class AssistantApplicationController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'student_name' => 'required|string',
-            'student_id' => 'required|unique:assistant_applications',
-            'course_name' => 'required|string',
+            'student_name' => 'required|string|max:255',
+            'student_id' => 'required|string|unique:assistant_applications,student_id',
+            'course_name' => 'required|string|max:255',
             'gpa' => 'required|numeric|between:0,4.00',
+            'status' => 'nullable|in:pending,accepted,rejected',
+        ], [
+            'student_name.required' => 'Nama mahasiswa wajib diisi',
+            'student_name.string' => 'Nama mahasiswa harus berupa teks',
+            'student_name.max' => 'Nama mahasiswa maksimal 255 karakter',
+            'student_id.required' => 'NIM wajib diisi',
+            'student_id.unique' => 'NIM sudah terdaftar',
+            'course_name.required' => 'Nama mata kuliah wajib diisi',
+            'course_name.string' => 'Nama mata kuliah harus berupa teks',
+            'gpa.required' => 'IPK wajib diisi',
+            'gpa.numeric' => 'IPK harus berupa angka',
+            'gpa.between' => 'IPK harus antara 0 - 4.00',
+            'status.in' => 'Status harus pending, accepted, atau rejected',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
         $application = AssistantApplication::create($request->all());
 
-        return response()->json($application, 201);
+        return response()->json([
+            'success' => true,
+            'message' => 'Application created successfully',
+            'data' => $application
+        ], 201);
     }
 
     /**
@@ -43,7 +70,11 @@ class AssistantApplicationController extends Controller
      */
     public function show(AssistantApplication $application)
     {
-        return response()->json($application);
+        return response()->json([
+            'success' => true,
+            'message' => 'Data retrieved successfully',
+            'data' => $application
+        ], 200);
     }
 
     /**
@@ -51,9 +82,41 @@ class AssistantApplicationController extends Controller
      */
     public function update(Request $request, AssistantApplication $application)
     {
+        $validator = Validator::make($request->all(), [
+            'student_name' => 'sometimes|required|string|max:255',
+            'student_id' => 'sometimes|required|string|unique:assistant_applications,student_id,' . $application->id,
+            'course_name' => 'sometimes|required|string|max:255',
+            'gpa' => 'sometimes|required|numeric|between:0,4.00',
+            'status' => 'sometimes|required|in:pending,accepted,rejected',
+        ], [
+            'student_name.required' => 'Nama mahasiswa wajib diisi',
+            'student_name.string' => 'Nama mahasiswa harus berupa teks',
+            'student_name.max' => 'Nama mahasiswa maksimal 255 karakter',
+            'student_id.required' => 'NIM wajib diisi',
+            'student_id.unique' => 'NIM sudah terdaftar',
+            'course_name.required' => 'Nama mata kuliah wajib diisi',
+            'course_name.string' => 'Nama mata kuliah harus berupa teks',
+            'gpa.required' => 'IPK wajib diisi',
+            'gpa.numeric' => 'IPK harus berupa angka',
+            'gpa.between' => 'IPK harus antara 0 - 4.00',
+            'status.in' => 'Status harus pending, accepted, atau rejected',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
         $application->update($request->all());
 
-        return response()->json($application);
+        return response()->json([
+            'success' => true,
+            'message' => 'Application updated successfully',
+            'data' => $application
+        ], 200);
     }
 
     /**
@@ -63,6 +126,10 @@ class AssistantApplicationController extends Controller
     {
         $application->delete();
 
-        return response()->json(null, 204);
+        return response()->json([
+            'success' => true,
+            'message' => 'Application deleted successfully',
+            'data' => null
+        ], 200);
     }
 }
