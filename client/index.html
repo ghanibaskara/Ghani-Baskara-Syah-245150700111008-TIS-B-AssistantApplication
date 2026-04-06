@@ -148,19 +148,19 @@
             <form id="form-post" onsubmit="createApplication(event)">
                 <div class="form-group">
                     <label for="post-student-name">Nama Mahasiswa</label>
-                    <input type="text" id="post-student-name" placeholder="contoh: Budi Santoso" required>
+                    <input type="text" id="post-student-name" required>
                 </div>
                 <div class="form-group">
                     <label for="post-student-id">NIM</label>
-                    <input type="text" id="post-student-id" placeholder="contoh: 245150700111008" required>
+                    <input type="text" id="post-student-id" required>
                 </div>
                 <div class="form-group">
                     <label for="post-course-name">Mata Kuliah</label>
-                    <input type="text" id="post-course-name" placeholder="contoh: Pemrograman Web" required>
+                    <input type="text" id="post-course-name" required>
                 </div>
                 <div class="form-group">
                     <label for="post-gpa">IPK</label>
-                    <input type="number" id="post-gpa" step="0.01" min="0" max="4" placeholder="contoh: 3.75" required>
+                    <input type="number" id="post-gpa" step="0.01" min="0" max="4" required>
                 </div>
                 <div class="form-group">
                     <label for="post-status">Status</label>
@@ -181,25 +181,25 @@
                 <div class="form-group">
                     <label for="put-id">ID Pendaftar</label>
                     <div class="id-row">
-                        <input type="number" id="put-id" placeholder="masukkan ID" min="1" required>
+                        <input type="number" id="put-id" min="1" required>
                         <button type="button" class="btn" onclick="loadApplication()">Load</button>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="put-student-name">Nama Mahasiswa</label>
-                    <input type="text" id="put-student-name" placeholder="Nama baru">
+                    <input type="text" id="put-student-name">
                 </div>
                 <div class="form-group">
                     <label for="put-student-id">NIM</label>
-                    <input type="text" id="put-student-id" placeholder="NIM baru">
+                    <input type="text" id="put-student-id">
                 </div>
                 <div class="form-group">
                     <label for="put-course-name">Mata Kuliah</label>
-                    <input type="text" id="put-course-name" placeholder="Mata kuliah baru">
+                    <input type="text" id="put-course-name">
                 </div>
                 <div class="form-group">
                     <label for="put-gpa">IPK</label>
-                    <input type="number" id="put-gpa" step="0.01" min="0" max="4" placeholder="IPK baru">
+                    <input type="number" id="put-gpa" step="0.01" min="0" max="4">
                 </div>
                 <div class="form-group">
                     <label for="put-status">Status</label>
